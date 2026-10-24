@@ -1,0 +1,46 @@
+﻿@model IEnumerable<FeedbackManagement.Models.Feedback>
+
+@{
+    ViewBag.Title = "Feedback List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Student Feedback List</h3>
+
+@if (Model != null && Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Enrollment No.</th>
+                <th>Email</th>
+                <th>Rating</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StudentName</td>
+                    <td>@item.EnrollmentNo</td>
+                    <td>@item.Email</td>
+                    <td>@item.Rating</td>
+                    <td>@item.Comments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No feedback has been submitted yet.</p>
+}
+
+<br />
+
+<a href="@Url.Action("Index", "Feedback")" class="btn">
+    Back to Feedback Form
+</a>

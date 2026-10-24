@@ -1,0 +1,115 @@
+﻿@model FeedbackManagement.Models.Feedback
+
+@{
+    ViewBag.Title = "Feedback Module";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var feedbackList = Session["FeedbackList"]
+        as System.Collections.Generic.List<FeedbackManagement.Models.Feedback>;
+}
+
+<h1>Feedback Module</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="success">
+        @TempData["Message"]
+    </div>
+}
+
+<div class="row">
+
+    <div class="form-section">
+        <h2>Submit Your Feedback</h2>
+
+        @using (Html.BeginForm("Index", "Feedback", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <label>Student Name</label>
+            @Html.TextBoxFor(m => m.StudentName,
+                new { placeholder = "Enter your full name" })
+            @Html.ValidationMessageFor(m => m.StudentName, "",
+                new { @class = "error" })
+
+            <label>Enrollment Number</label>
+            @Html.TextBoxFor(m => m.EnrollmentNo,
+                new { placeholder = "Enter enrollment number" })
+            @Html.ValidationMessageFor(m => m.EnrollmentNo, "",
+                new { @class = "error" })
+
+            <label>Email Address</label>
+            @Html.TextBoxFor(m => m.Email,
+                new { placeholder = "name@example.com" })
+            @Html.ValidationMessageFor(m => m.Email, "",
+                new { @class = "error" })
+
+            <label>Rating</label>
+            @Html.DropDownListFor(m => m.Rating,
+                new SelectList(new[]
+                {
+                    "5 - ⭐⭐⭐⭐⭐",
+                    "4 - ⭐⭐⭐⭐",
+                    "3 - ⭐⭐⭐",
+                    "2 - ⭐⭐",
+                    "1 - ⭐"
+                }),
+                "-- Select Rating --")
+            @Html.ValidationMessageFor(m => m.Rating, "",
+                new { @class = "error" })
+
+            <label>Comments</label>
+            @Html.TextAreaFor(m => m.Comments,
+                new { rows = 4, placeholder = "Write your feedback here..." })
+            @Html.ValidationMessageFor(m => m.Comments, "",
+                new { @class = "error" })
+
+            <button type="submit">Submit Feedback</button>
+        }
+    </div>
+
+    <div class="list-section">
+        <h2>Submitted Feedback Records</h2>
+
+        @if (feedbackList != null && feedbackList.Count > 0)
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>Enrollment No.</th>
+                        <th>Email</th>
+                        <th>Rating</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (int i = 0; i < feedbackList.Count; i++)
+                    {
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@feedbackList[i].StudentName</td>
+                            <td>@feedbackList[i].EnrollmentNo</td>
+                            <td>@feedbackList[i].Email</td>
+                            <td>@feedbackList[i].Rating</td>
+                            <td>@feedbackList[i].Comments</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No feedback records available.</p>
+        }
+    </div>
+
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

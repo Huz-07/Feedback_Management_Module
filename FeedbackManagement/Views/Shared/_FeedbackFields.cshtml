@@ -1,0 +1,52 @@
+﻿@model FeedbackManagement.Models.Feedback
+
+@Html.AntiForgeryToken()
+
+<div>
+    @Html.LabelFor(m => m.StudentName, "Student Name")
+    @Html.TextBoxFor(m => m.StudentName,
+        new { placeholder = "Enter student name" })
+    @Html.ValidationMessageFor(m => m.StudentName, "",
+        new { @class = "error" })
+</div>
+
+<div>
+    @Html.LabelFor(m => m.EnrollmentNo, "Enrollment Number")
+    @Html.TextBoxFor(m => m.EnrollmentNo,
+        new { placeholder = "Enter enrollment number" })
+    @Html.ValidationMessageFor(m => m.EnrollmentNo, "",
+        new { @class = "error" })
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Email, "Email")
+    @Html.TextBoxFor(m => m.Email,
+        new { placeholder = "Enter email address" })
+    @Html.ValidationMessageFor(m => m.Email, "",
+        new { @class = "error" })
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Rating, "Rating")
+    @Html.DropDownListFor(m => m.Rating,
+        new SelectList(new[]
+        {
+            "Excellent",
+            "Very Good",
+            "Good",
+            "Average",
+            "Poor"
+        }),
+        "-- Select Rating --")
+    @Html.ValidationMessageFor(m => m.Rating, "",
+        new { @class = "error" })
+</div>
+
+<div>
+    @Html.LabelFor(m => m.Comments, "Comments")
+    @Html.TextAreaFor(m => m.Comments,
+        new { rows = 4, placeholder = "Enter your comments" })
+    @Html.ValidationMessageFor(m => m.Comments, "",
+        new { @class = "error" })
+</div>
+```
